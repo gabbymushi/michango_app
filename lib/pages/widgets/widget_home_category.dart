@@ -26,23 +26,7 @@ _buildListCategory(BuildContext context) {
       children: [
         makeDashboardItem(
             mediaQueryData,
-            "Active\nUsers",
-            "#3FC379",
-            Icon(Icons.verified_user),
-            Border(
-              right: BorderSide(
-                color: Colors.black,
-                width: 1.0,
-              ),
-              bottom: BorderSide(
-                color: Colors.black,
-                width: 1.0,
-              ),
-            ),
-            () => {}),
-        makeDashboardItem(
-            mediaQueryData,
-            "Inactive Users",
+            "Ahadi",
             "#FFCD42",
             Icon(Icons.help),
             Border(
@@ -58,9 +42,25 @@ _buildListCategory(BuildContext context) {
             () => {}),
         makeDashboardItem(
             mediaQueryData,
-            "Deleted\nUsers",
+            "Makusanyo",
+            "#3FC379",
+            Icon(Icons.verified_user),
+            Border(
+              right: BorderSide(
+                color: Colors.black,
+                width: 1.0,
+              ),
+              bottom: BorderSide(
+                color: Colors.black,
+                width: 1.0,
+              ),
+            ),
+            () => {}),
+        makeDashboardItem(
+            mediaQueryData,
+            "Deni",
             "#D13839",
-            Icon(Icons.delete),
+            Icon(Icons.file_copy),
             Border(
               right: BorderSide(
                 color: Colors.black,
