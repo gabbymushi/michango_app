@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:michango/pages/widgets/widget_home_category.dart';
-import './drawer.dart';
+import 'pages/widgets/drawer.dart';
 
 void main() {
   return runApp(MichangoApp());
