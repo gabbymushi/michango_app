@@ -10,7 +10,7 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('New Entry'),
+        title: Text('Ongeza Mchangiaji'),
         actions: [
           TextButton(
             onPressed: () => {},
@@ -24,7 +24,48 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
           )
         ],
       ),
-      body: Text('Foo'),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Jina kamili',
+                hintText: 'Enter a search term',
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: TextFormField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Namba ya simu',
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: TextFormField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Kiasi cha ahadi',
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: TextFormField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Kiasi anachopunguza',
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

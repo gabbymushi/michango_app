@@ -6,9 +6,9 @@ import 'package:michango/pages/widgets/widget_home_category.dart';
 void main() {
   return runApp(
     MaterialApp(
-      //debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        brightness: Brightness.light,
+        brightness: Brightness.dark,
         accentColor: Colors.redAccent,
       ),
       home: MichangoApp(),
