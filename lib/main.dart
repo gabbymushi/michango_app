@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:michango/pages/widgets/add_contributor.dart';
+import 'package:michango/pages/widgets/contributors_list.dart';
 import 'package:michango/pages/widgets/widget_home_category.dart';
 //import 'pages/widgets/drawer.dart';
 
@@ -8,7 +9,7 @@ void main() {
     MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
         accentColor: Colors.redAccent,
       ),
       home: MichangoApp(),
@@ -68,10 +69,12 @@ Widget _uisetup() {
             physics: BouncingScrollPhysics(),
             children: [
               DashboardItems(),
+              ContributorsList()
               //Text('Widget 2'),
             ],
           ),
         ))
+
       ],
     ),
   );
