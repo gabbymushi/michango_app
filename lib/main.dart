@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:michango/pages/widgets/add_contributor.dart';
+import 'package:michango/pages/widgets/bottom_nav_bar.dart';
 import 'package:michango/pages/widgets/contributors_list.dart';
 import 'package:michango/pages/widgets/widget_home_category.dart';
 //import 'pages/widgets/drawer.dart';
@@ -33,19 +34,20 @@ class MichangoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('HARUSI YA FRANK.'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _openAddEntryDialog(context),
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
+        appBar: AppBar(
+          title: Text('HARUSI YA FRANK.'),
         ),
-      ),
-      body: _uisetup(),
-      //drawer: MyDrawer(),
-    );
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => _openAddEntryDialog(context),
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+        ),
+        body: _uisetup(),
+        bottomNavigationBar: BottomNavBar()
+        //drawer: MyDrawer(),
+        );
   }
 }
 
@@ -74,7 +76,6 @@ Widget _uisetup() {
             ],
           ),
         ))
-
       ],
     ),
   );
