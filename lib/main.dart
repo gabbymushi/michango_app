@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:michango/pages/widgets/add_contributor.dart';
 import 'package:michango/pages/widgets/bottom_nav_bar.dart';
 import 'package:michango/pages/widgets/contributors_list.dart';
+import 'package:michango/pages/widgets/dashboard.dart';
+import 'package:michango/pages/widgets/message_config.dart';
 import 'package:michango/pages/widgets/widget_home_category.dart';
 //import 'pages/widgets/drawer.dart';
 
@@ -13,6 +15,13 @@ void main() {
         brightness: Brightness.light,
         accentColor: Colors.redAccent,
       ),
+      routes: {
+        '/first': (context) => MichangoApp(),
+        '/second': (context) => SecondScreen(),
+        /*  '/third': (context) => ProfilePage1(),
+        '/fourth': (context) => ProfilePage1(),
+        '/fifth': (context) => ProfilePage1(), */
+      },
       home: MichangoApp(),
     ),
   );
@@ -44,7 +53,7 @@ class MichangoApp extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        body: _uisetup(),
+        body: Dashboard(),
         bottomNavigationBar: BottomNavBar()
         //drawer: MyDrawer(),
         );
