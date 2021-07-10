@@ -86,7 +86,7 @@ Card makeDashboardItem(MediaQueryData query, String title, String color,
   return Card(
     elevation: 5,
     color: HexColor(color),
-    margin: new EdgeInsets.all(5.0),
+    margin: EdgeInsets.all(5.0),
     child: Container(
       decoration: BoxDecoration(color: new HexColor(color)),
       child: Center(
