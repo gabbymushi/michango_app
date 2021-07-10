@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:michango/pages/widgets/add_contributor.dart';
+import 'package:michango/pages/widgets/shared/drawer.dart';
 import 'package:michango/pages/widgets/shared/michango_app_bar.dart';
 import 'package:michango/pages/widgets/shared/bottom_nav_bar.dart';
 import 'package:michango/pages/widgets/contributors_list.dart';
 import 'package:michango/pages/widgets/dashboard.dart';
 import 'package:michango/pages/widgets/message_config.dart';
-import 'package:michango/pages/widgets/widget_home_category.dart';
-//import 'pages/widgets/drawer.dart';
 
 void main() {
   return runApp(
@@ -19,10 +17,7 @@ void main() {
       routes: {
         '/first': (context) => MichangoApp(),
         '/second': (context) => SecondScreen(),
-        '/michango': (context) => ContributorsList(),
-        /*  '/third': (context) => ProfilePage1(),
-        '/fourth': (context) => ProfilePage1(),
-        '/fifth': (context) => ProfilePage1(), */
+        '/michango': (context) => Michango(),
       },
       home: MichangoApp(),
     ),
@@ -30,62 +25,13 @@ void main() {
 }
 
 class MichangoApp extends StatelessWidget {
-  void _openAddEntryDialog(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (_) {
-            return AddEntryDialog();
-          },
-          fullscreenDialog: true),
-    );
-    //Navigator.of(context).push(AddEntryDialog());
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MichangoAppBar(),
-        /*     floatingActionButton: FloatingActionButton(
-          onPressed: () => _openAddEntryDialog(context),
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
-          ),
-        ), */
-        body: Dashboard(),
-        bottomNavigationBar: BottomNavBar()
-        //drawer: MyDrawer(),
-        );
+      appBar: MichangoAppBar(),
+      body: Dashboard(),
+      bottomNavigationBar: BottomNavBar(),
+      drawer: MyDrawer(),
+    );
   }
-}
-
-/* void _openAddEntryDialog(){
-  Navigator.of(context).push(MaterialPageRoute<null>(builder: (Build context){
-    return new AddEntryDialog();
-  },
-  fullScreenDialog:true,);
-} */
-
-Widget _uisetup() {
-  return Container(
-    alignment: Alignment.center,
-    child: Column(
-      children: <Widget>[
-        Expanded(
-            child: Padding(
-          padding: EdgeInsets.all(0),
-          child: ListView(
-            shrinkWrap: true,
-            physics: BouncingScrollPhysics(),
-            children: [
-              DashboardItems(),
-              ContributorsList()
-              //Text('Widget 2'),
-            ],
-          ),
-        ))
-      ],
-    ),
-  );
 }
