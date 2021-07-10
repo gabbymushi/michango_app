@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:michango/pages/widgets/add_contributor.dart';
-import 'package:michango/pages/widgets/bottom_nav_bar.dart';
+import 'package:michango/pages/widgets/shared/michango_app_bar.dart';
+import 'package:michango/pages/widgets/shared/bottom_nav_bar.dart';
 import 'package:michango/pages/widgets/contributors_list.dart';
 import 'package:michango/pages/widgets/dashboard.dart';
 import 'package:michango/pages/widgets/message_config.dart';
@@ -18,6 +19,7 @@ void main() {
       routes: {
         '/first': (context) => MichangoApp(),
         '/second': (context) => SecondScreen(),
+        '/michango': (context) => ContributorsList(),
         /*  '/third': (context) => ProfilePage1(),
         '/fourth': (context) => ProfilePage1(),
         '/fifth': (context) => ProfilePage1(), */
@@ -43,16 +45,14 @@ class MichangoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('HARUSI YA FRANK.'),
-        ),
-        floatingActionButton: FloatingActionButton(
+        appBar: MichangoAppBar(),
+        /*     floatingActionButton: FloatingActionButton(
           onPressed: () => _openAddEntryDialog(context),
           child: Icon(
             Icons.add,
             color: Colors.white,
           ),
-        ),
+        ), */
         body: Dashboard(),
         bottomNavigationBar: BottomNavBar()
         //drawer: MyDrawer(),
