@@ -28,7 +28,7 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            padding: EdgeInsets.all(10),
             child: TextField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -38,7 +38,7 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            padding: EdgeInsets.all(10),
             child: TextFormField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -47,7 +47,7 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            padding: EdgeInsets.all(10),
             child: TextFormField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -56,7 +56,7 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            padding: EdgeInsets.all(10),
             child: TextFormField(
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
