@@ -10,7 +10,7 @@ class MyDrawer extends StatelessWidget {
           DrawerHeader(
             child: Text('HARUSI YA FRANK'),
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Colors.cyan[600],
             ),
           ),
           ListTile(
