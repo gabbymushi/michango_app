@@ -6,7 +6,7 @@ class BottomNavBar extends StatelessWidget {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       //backgroundColor: Color(0xFF6200EE),
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.cyan[600],
       selectedItemColor: Colors.white,
       unselectedItemColor: Colors.white.withOpacity(.60),
       selectedFontSize: 14,
