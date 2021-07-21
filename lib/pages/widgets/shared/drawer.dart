@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:michango/pages/widgets/login.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -23,6 +24,13 @@ class MyDrawer extends StatelessWidget {
             title: Text('Kumbusha wachangiaji'),
             onTap: () {
               Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: Text('Logout',style: TextStyle(color: Colors.blue, fontSize: 25),),
+            onTap: () {
+             Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => Login()));
             },
           ),
         ],
