@@ -16,7 +16,7 @@ class MichangoAppBar extends StatelessWidget implements PreferredSizeWidget{
           iconSize: 24,
           elevation: 16,
           style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 19,
               fontWeight: FontWeight.w200,
               fontFamily: 'Encode Sans'),
