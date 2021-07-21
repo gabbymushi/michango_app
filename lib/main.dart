@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:michango/pages/widgets/login.dart';
+import 'package:michango/pages/widgets/registration.dart';
 import 'package:michango/pages/widgets/shared/drawer.dart';
 import 'package:michango/pages/widgets/shared/michango_app_bar.dart';
 import 'package:michango/pages/widgets/shared/bottom_nav_bar.dart';
@@ -11,15 +13,23 @@ void main() {
     MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        primaryColor: Colors.cyan[600],
+        primarySwatch: Colors.pink,
         brightness: Brightness.light,
-        accentColor: Colors.redAccent,
       ),
+      /*      theme: ThemeData(
+        brightness: Brightness.light,=
+        primaryColor: Colors.blue,
+        //primarySwatch: Colors.purple[200],
+        accentColor: Colors.redAccent,
+      ), */
       routes: {
         '/first': (context) => MichangoApp(),
         '/second': (context) => SecondScreen(),
         '/michango': (context) => Michango(),
       },
-      home: MichangoApp(),
+      //home: Login(),
+      home: Login(),
     ),
   );
 }
