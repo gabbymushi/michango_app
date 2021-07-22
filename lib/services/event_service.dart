@@ -25,4 +25,16 @@ class UserService {
       throw Exception('Failed to regiser user');
     }
   }
+
+  Future<User> getUsers() async {
+    final Response response = await get(apiUrl);
+
+    if (response.statusCode == 200) {
+      var body = jsonDecode(response.body);
+
+      return User.fromJson(body);
+    } else {
+      throw Exception('Failed to regiser user');
+    }
+  }
 }
