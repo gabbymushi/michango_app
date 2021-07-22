@@ -39,6 +39,7 @@ class ContributorsList extends StatefulWidget {
 }
 
 class _ContributorsList extends State<ContributorsList> {
+  
   @override
   Widget build(BuildContext context) {
     return Container(
