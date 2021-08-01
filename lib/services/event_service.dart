@@ -1,17 +1,27 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:michango/models/user.dart';
+import 'package:michango/models/event.dart';
 
-class UserService {
-  final Uri apiUrl = Uri.parse('http://localhost:3000/api/v1/users');
+class EventService {
+  final Uri apiUrl = Uri.parse('http://172.20.10.2:3000/api/v1/events');
 
-  Future<User> createUser(User user) async {
-    Map data = {
-      'fullName': user.fullName,
-      'phoneNumber': user.phoneNumber,
-      'type': user.type
-    };
+  Future<Event> createInitialEvent(body) async {
+    final Response response = await post(apiUrl,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(body));
+
+    if (response.statusCode == 200) {
+      return Event.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to regiser event');
+    }
+  }
+
+  Future<Event> createEvent(Event event) async {
+    Map data = {'name': event.name, 'date': event.date};
 
     final Response response = await post(apiUrl,
         headers: <String, String>{
@@ -20,21 +30,22 @@ class UserService {
         body: jsonEncode(data));
 
     if (response.statusCode == 200) {
-      return User.fromJson(json.decode(response.body));
+      return Event.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to regiser user');
+      throw Exception('Failed to regiser event');
     }
   }
 
-  Future<User> getUsers() async {
-    final Response response = await get(apiUrl);
+  Future<List<Event>> getEvents() async {
+    Response response = await get(apiUrl, headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    });
 
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body);
-
-      return User.fromJson(body);
+      return body.map<Event>((event) => Event.fromJson(event)).toList();
     } else {
-      throw Exception('Failed to regiser user');
+      throw Exception('Failed to get events');
     }
   }
 }
