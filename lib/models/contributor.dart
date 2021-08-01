@@ -7,8 +7,8 @@ class Contributor {
   final String title;
   final String phoneNumber;
   final String email;
-  final Float amount;
-  final Float balance;
+  final int amount;
+  final int balance;
 
   Contributor(this._id,
       {this.fullName,

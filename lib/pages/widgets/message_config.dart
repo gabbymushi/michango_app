@@ -8,12 +8,7 @@ class SecondScreen extends StatelessWidget {
     return Scaffold(
       appBar: MichangoAppBar(),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed('/first');
-          },
-          child: Text('Go back!'),
-        ),
+        child: CircularProgressIndicator()
       ),
       bottomNavigationBar: BottomNavBar(),
     );
