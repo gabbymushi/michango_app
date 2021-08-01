@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:michango/pages/widgets/login.dart';
-import 'package:michango/pages/widgets/registration.dart';
 import 'package:michango/pages/widgets/shared/drawer.dart';
 import 'package:michango/pages/widgets/shared/michango_app_bar.dart';
 import 'package:michango/pages/widgets/shared/bottom_nav_bar.dart';
@@ -14,7 +13,7 @@ void main() {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.cyan[600],
-        primarySwatch: Colors.pink,
+        primarySwatch: Colors.cyan,
         brightness: Brightness.light,
       ),
       /*      theme: ThemeData(
