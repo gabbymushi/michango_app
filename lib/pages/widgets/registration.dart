@@ -19,6 +19,22 @@ class _RegistrationState extends State<Registration> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  DateTime selectedDate = DateTime.now();
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+
+    _date.text = "${selectedDate.toLocal()}".split(' ')[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,10 +73,17 @@ class _RegistrationState extends State<Registration> {
                                 InputDecoration(labelText: 'Jina La Event'),
                           ),
                           TextFormField(
-                            controller: _date,
-                            decoration:
-                                InputDecoration(labelText: 'Tarehe Ya Event'),
-                          ),
+                              readOnly: true,
+                              controller: _date,
+                              decoration:
+                                  InputDecoration(labelText: 'Tarehe Ya Event'),
+                              onTap: () {
+                                // Below line stops keyboard from appearing
+                                FocusScope.of(context)
+                                    .requestFocus(new FocusNode());
+                                _selectDate(context);
+                                // Show Date Picker Here
+                              }),
                         ],
                       ),
                       isActive: _currentStep >= 0,
@@ -177,10 +200,20 @@ class _RegistrationState extends State<Registration> {
       EventService eventService = new EventService();
 
       eventService.createInitialEvent(eventUser);
+      clearInputFields();
       //RegistrationUser();
       print("Successful");
     } else {
       print("Unsuccessfull");
     }
+  }
+
+  void clearInputFields() {
+    _name.clear();
+    _date.clear();
+
+    _fullName.clear();
+    _phoneNumber.clear();
+    _password.clear();
   }
 }
