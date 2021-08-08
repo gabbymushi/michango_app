@@ -5,6 +5,7 @@ import 'package:michango/models/event.dart';
 
 class EventService {
   final Uri apiUrl = Uri.parse('http://172.20.10.2:3000/api/v1/events');
+  //final Uri apiUrl = Uri.parse('http://192.168.1.174:3000/api/v1/events');
 
   Future<Event> createInitialEvent(body) async {
     final Response response = await post(apiUrl,
