@@ -27,10 +27,15 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text('Logout',style: TextStyle(color: Colors.blue, fontSize: 25),),
+            title: Text(
+              'Logout',
+              style: TextStyle(color: Colors.blue, fontSize: 25),
+            ),
             onTap: () {
-             Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => Login()));
+              /*  Navigator.push(
+                      context, MaterialPageRoute(builder: (_) => Login())); */
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => Login()));
             },
           ),
         ],
