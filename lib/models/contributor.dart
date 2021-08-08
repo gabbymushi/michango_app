@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class Contributor {
   final String _id;
   final String fullName;
