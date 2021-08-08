@@ -5,12 +5,14 @@ import 'package:michango/models/contributor.dart';
 
 class ContributorService {
   final Uri apiUrl = Uri.parse('http://172.20.10.2:3000/api/v1/contributors');
+  //final Uri apiUrl = Uri.parse('http://192.168.1.174:3000/api/v1/contributors');
 
-  Future<Contributor> createContributor(Contributor contributor) async {
+  Future<Contributor> createContributor(contributor) async {
     Map data = {
       'fullName': contributor.fullName,
       'phoneNumber': contributor.phoneNumber,
-      'amount': contributor.amount,
+      'pledgedAmount': contributor.pledgedAmount,
+      'paidAmount': contributor.paidAmount,
       'title': contributor.title,
       'event': contributor.event
     };
