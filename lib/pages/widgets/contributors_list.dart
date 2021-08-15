@@ -45,6 +45,7 @@ class _ContributorsList extends State<ContributorsList> {
 
   @override
   void initState() {
+    super.initState();
     _contributorModel = ContributorService().getContributors();
   }
 
@@ -59,8 +60,7 @@ class _ContributorsList extends State<ContributorsList> {
             if (snapshot.hasData) {
               return makeTable(snapshot.data);
             } else {
-              return SizedBox(
-                  child: new CircularProgressIndicator());
+              return SizedBox(child: new CircularProgressIndicator());
             }
           },
         ),
