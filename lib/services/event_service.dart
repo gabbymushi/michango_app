@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:michango/models/event.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class EventService {
   final Uri apiUrl = Uri.parse('http://172.20.10.2:3000/api/v1/events');
@@ -38,12 +39,16 @@ class EventService {
   }
 
   Future<List<Event>> getEvents() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final Uri apiUrl = Uri.parse(
+        "http://172.20.10.2:3000/api/v1/users/${prefs.getString('userId')}/events");
     Response response = await get(apiUrl, headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     });
 
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body);
+     // print(response.body);
       return body.map<Event>((event) => Event.fromJson(event)).toList();
     } else {
       throw Exception('Failed to get events');
