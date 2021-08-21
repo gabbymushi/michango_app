@@ -21,6 +21,10 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
       appBar: AppBar(
         title: Text('Ongeza Mchangiaji'),
         actions: [
+         /*  TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text("Cancel"),
+          ), */
           TextButton(
             onPressed: _submitForm,
             child: Text(
@@ -117,10 +121,18 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
       ContributorService contributorService = new ContributorService();
 
       contributorService.createContributor(contributor);
-      //RegistrationUser();
+
+      clearInputFields();
       print("Successful");
     } else {
       print("Unsuccessfull");
     }
+  }
+
+  void clearInputFields() {
+    _fullName.clear();
+    _phoneNumber.clear();
+    _pledge.clear();
+    _paidAmount.clear();
   }
 }

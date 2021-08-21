@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:michango/main.dart';
-import 'package:michango/pages/widgets/contributors_list.dart';
-import 'package:michango/pages/widgets/dashboard.dart';
 import 'package:michango/pages/widgets/registration.dart';
 import 'package:michango/services/user_service.dart';
 
