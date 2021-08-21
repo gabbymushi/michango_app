@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:michango/services/contributor_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddEntryDialog extends StatefulWidget {
   @override
@@ -51,7 +52,7 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Jina kamili',
-                    hintText: 'Enter a search term',
+                    hintText: 'Jina kamili',
                   ),
                 ),
               ),
@@ -101,12 +102,16 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
   }
 
   Future _submitForm() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var eventId = prefs.getString('currentEventId');
+
     if (_formKey.currentState.validate()) {
-      Map<String, dynamic> contributor = {
+      Map contributor = {
         'fullName': _fullName.text,
         'phoneNumber': _phoneNumber.text,
         'pledgedAmount': _pledge.text,
         'paidAmount': _paidAmount.text,
+        'event': eventId
       };
 
       ContributorService contributorService = new ContributorService();
