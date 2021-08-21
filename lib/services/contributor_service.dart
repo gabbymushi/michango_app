@@ -2,26 +2,18 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:michango/models/contributor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ContributorService {
   final Uri apiUrl = Uri.parse('http://172.20.10.2:3000/api/v1/contributors');
   //final Uri apiUrl = Uri.parse('http://192.168.1.174:3000/api/v1/contributors');
 
   Future<Contributor> createContributor(contributor) async {
-    Map data = {
-      'fullName': contributor.fullName,
-      'phoneNumber': contributor.phoneNumber,
-      'pledgedAmount': contributor.pledgedAmount,
-      'paidAmount': contributor.paidAmount,
-      'title': contributor.title,
-      'event': contributor.event
-    };
-
     Response response = await post(apiUrl,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
-        body: jsonEncode(data));
+        body: jsonEncode(contributor));
 
     if (response.statusCode == 200) {
       return Contributor.fromJson(json.decode(response.body));
@@ -31,6 +23,10 @@ class ContributorService {
   }
 
   Future<List<Contributor>> getContributors() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final Uri apiUrl = Uri.parse(
+        'http://172.20.10.2:3000/api/v1/events/${prefs.getString('currentEventId')}/contributors');
+
     Response response = await get(apiUrl, headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     });
