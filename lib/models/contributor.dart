@@ -1,5 +1,5 @@
 class Contributor {
-  final String _id;
+  final String id;
   final String fullName;
   final String event;
   final String title;
@@ -8,8 +8,9 @@ class Contributor {
   final int amount;
   final int balance;
 
-  Contributor(this._id,
-      {this.fullName,
+  Contributor(
+      {this.id,
+      this.fullName,
       this.event,
       this.title,
       this.phoneNumber,
@@ -19,7 +20,7 @@ class Contributor {
 
   factory Contributor.fromJson(Map<String, dynamic> json) {
     return Contributor(
-      json['_id'],
+      id: json['_id'],
       fullName: json['fullName'],
       phoneNumber: json['phoneNumber'],
       event: json['event'],
@@ -31,7 +32,7 @@ class Contributor {
   }
 
   Map<String, dynamic> toJson() => {
-        '_id': _id,
+        'id': _d,
         'fullName': fullName,
         'phoneNumber': phoneNumber,
         'event': event,
