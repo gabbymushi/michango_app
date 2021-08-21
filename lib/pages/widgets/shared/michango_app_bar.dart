@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:michango/models/event.dart';
 import 'package:michango/services/event_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MichangoAppBar extends StatelessWidget implements PreferredSizeWidget {
   //Future final <List<Event>> _events;
@@ -41,13 +42,12 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             dropdownValue =
-                snapshot.data.length > 0 ? snapshot.data[0].name : 'No Event';
-
+                snapshot.data.length > 0 ? snapshot.data[0].id : 'No Event';  
+            _setCurrentEvent(snapshot.data[0].id);
+            
             return Container(
               child: Theme(
-                data: Theme.of(context).copyWith(
-                  canvasColor: Colors.cyan[600]
-                ),
+                data: Theme.of(context).copyWith(canvasColor: Colors.cyan[600]),
                 child: DropdownButton<String>(
                   value: dropdownValue,
                   icon: Icon(
@@ -68,12 +68,13 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
                   onChanged: (String newValue) {
                     setState(() {
                       dropdownValue = newValue;
+                      _setCurrentEvent(newValue);
                     });
                   },
                   items: snapshot.data
                       .map<DropdownMenuItem<String>>((Event event) {
                     return DropdownMenuItem<String>(
-                      value: event.name,
+                      value: event.id,
                       child: Text(event.name),
                     );
                   }).toList(),
@@ -84,5 +85,11 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
             return SizedBox(child: new CircularProgressIndicator());
           }
         });
+  }
+
+  _setCurrentEvent(eventId) async {
+    print(eventId);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('currentEventId', eventId);
   }
 }
