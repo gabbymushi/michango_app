@@ -42,9 +42,9 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             dropdownValue =
-                snapshot.data.length > 0 ? snapshot.data[0].id : 'No Event';  
+                snapshot.data.length > 0 ? snapshot.data[0].id : 'No Event';
             _setCurrentEvent(snapshot.data[0].id);
-            
+
             return Container(
               child: Theme(
                 data: Theme.of(context).copyWith(canvasColor: Colors.cyan[600]),
@@ -87,7 +87,7 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
         });
   }
 
-  _setCurrentEvent(eventId) async {
+  void _setCurrentEvent(eventId) async {
     print(eventId);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('currentEventId', eventId);
