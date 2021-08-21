@@ -42,11 +42,6 @@ class UserService {
   Future<dynamic> login(loginInfo) async {
     final Uri apiUrl = Uri.parse('http://172.20.10.2:3000/api/v1/auth/login');
     var status = false;
-//print(loginInfo.phoneNumber);
-    /*    Map data = {
-      'phoneNumber': loginInfo.phoneNumber,
-      'password': loginInfo.password
-    }; */
 
     try {
       final Response response = await post(apiUrl,
@@ -57,17 +52,15 @@ class UserService {
 
       if (response.statusCode == 200) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
+
         var mappedUser = json.decode(response.body)['user'];
         var token = json.decode(response.body)['token'];
-        // print(json.decode(response.body));
-        //var rawUser = response.body;
         var user = User.fromJson(mappedUser);
-        //print(mappedUser['_id']);
-        prefs.setString('userId', mappedUser['_id']);
+
+        prefs.setString('userId', user.id);
         prefs.setString('fullName', user.fullName);
         prefs.setString('token', token);
-        //user = json.decode(response.body);
-        //print(prefs.getString('token'));
+
         status = true;
       } else {
         throw Exception('Failed to regiser user');

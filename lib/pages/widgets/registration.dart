@@ -175,10 +175,12 @@ class _RegistrationState extends State<Registration> {
   }
 
   continued() {
+    // ignore: unnecessary_statements
     _currentStep < 1 ? setState(() => _currentStep += 1) : null;
   }
 
   cancel() {
+    // ignore: unnecessary_statements
     _currentStep > 0 ? setState(() => _currentStep -= 1) : null;
   }
 

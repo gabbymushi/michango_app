@@ -15,8 +15,7 @@ class Michango extends StatelessWidget {
             return AddEntryDialog();
           },
           fullscreenDialog: true),
-    );
-    //Navigator.of(context).push(AddEntryDialog());
+    ).then((_) => Navigator.pushNamed(context, "/michango"));
   }
 
   @override
@@ -93,11 +92,11 @@ Widget makeTable(List<Contributor> contributors) {
               DataCell(Text('1', style: TextStyle(fontSize: 14))),
               DataCell(
                   Text(contributor.fullName, style: TextStyle(fontSize: 16))),
-              DataCell(Text(contributor.amount.toString(),
+              DataCell(Text(contributor.pledgedAmount.toString(),
                   style: TextStyle(fontSize: 14))),
-              DataCell(Text(contributor.balance.toString(),
+              DataCell(Text(contributor.paidAmount.toString(),
                   style: TextStyle(fontSize: 14))),
-              DataCell(Text(contributor.balance.toString(),
+              DataCell(Text(contributor.paidAmount.toString(),
                   style: TextStyle(fontSize: 14))),
             ]))
         .toList(),
