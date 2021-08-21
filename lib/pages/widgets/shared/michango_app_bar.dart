@@ -40,37 +40,45 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
         future: _events,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-              dropdownValue =
-                snapshot.data.length > 0 ? snapshot.data[0].name : 'No Event'; 
+            dropdownValue =
+                snapshot.data.length > 0 ? snapshot.data[0].name : 'No Event';
 
-            return DropdownButton<String>(
-              value: dropdownValue,
-              icon: Icon(
-                Icons.arrow_drop_down,
-                color: Colors.white,
+            return Container(
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  canvasColor: Colors.cyan[600]
+                ),
+                child: DropdownButton<String>(
+                  value: dropdownValue,
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color: Colors.white,
+                  ),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 19,
+                      fontWeight: FontWeight.w200,
+                      fontFamily: 'Encode Sans'),
+                  /*    underline: Container(
+                      height: 2,
+                      color: Colors.white,
+                    ), */
+                  onChanged: (String newValue) {
+                    setState(() {
+                      dropdownValue = newValue;
+                    });
+                  },
+                  items: snapshot.data
+                      .map<DropdownMenuItem<String>>((Event event) {
+                    return DropdownMenuItem<String>(
+                      value: event.name,
+                      child: Text(event.name),
+                    );
+                  }).toList(),
+                ),
               ),
-              iconSize: 24,
-              elevation: 16,
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 19,
-                  fontWeight: FontWeight.w200,
-                  fontFamily: 'Encode Sans'),
-              /*    underline: Container(
-                  height: 2,
-                  color: Colors.white,
-                ), */
-              onChanged: (String newValue) {
-                setState(() {
-                  dropdownValue = newValue;
-                });
-              },
-              items: snapshot.data.map<DropdownMenuItem<String>>((Event event) {
-                return DropdownMenuItem<String>(
-                  value: event.name,
-                  child: Text(event.name),
-                );
-              }).toList(),
             );
           } else {
             return SizedBox(child: new CircularProgressIndicator());
