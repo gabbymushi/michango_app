@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class Contributor {
   final String id;
   final String fullName;
@@ -5,8 +7,8 @@ class Contributor {
   final String title;
   final String phoneNumber;
   final String email;
-  final int amount;
-  final int balance;
+  final num pledgedAmount;
+  final num paidAmount;
 
   Contributor(
       {this.id,
@@ -15,8 +17,8 @@ class Contributor {
       this.title,
       this.phoneNumber,
       this.email,
-      this.amount,
-      this.balance});
+      this.pledgedAmount,
+      this.paidAmount});
 
   factory Contributor.fromJson(Map<String, dynamic> json) {
     return Contributor(
@@ -26,19 +28,19 @@ class Contributor {
       event: json['event'],
       title: json['title'],
       email: json['email'],
-      amount: json['amount'],
-      balance: json['balance'],
+      pledgedAmount: json['pledgedAmount'],
+      paidAmount: json['paidAmount'],
     );
   }
 
   Map<String, dynamic> toJson() => {
-        'id': _d,
+        'id': id,
         'fullName': fullName,
         'phoneNumber': phoneNumber,
         'event': event,
         'title': title,
         'email': email,
-        'amount': amount,
-        'balance': balance
+        'pledgedAmount': pledgedAmount,
+        'paidAmount': paidAmount
       };
 }
