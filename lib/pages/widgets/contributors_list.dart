@@ -15,8 +15,7 @@ class Michango extends StatelessWidget {
             return AddEntryDialog();
           },
           fullscreenDialog: true),
-    );
-    //Navigator.of(context).push(AddEntryDialog());
+    ).then((_) => Navigator.pushNamed(context, "/michango"));
   }
 
   @override
