@@ -39,7 +39,7 @@ class _RegistrationState extends State<Registration> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        //automaticallyImplyLeading: false,
         title: Text('Usajili MichangoApp'),
         centerTitle: true,
       ),
