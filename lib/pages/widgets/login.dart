@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:michango/main.dart';
-import 'package:michango/pages/widgets/registration.dart';
 import 'package:michango/services/user_service.dart';
 
 void main() {
@@ -33,6 +32,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       //backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text("Login"),
       ),
       body: SingleChildScrollView(
@@ -103,10 +103,6 @@ class _LoginState extends State<Login> {
                     borderRadius: BorderRadius.circular(20)),
                 child: TextButton(
                   onPressed: _login,
-                  /*  () {
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (_) => Michango()));
-                  }, */
                   child: Text(
                     'Login',
                     style: TextStyle(color: Colors.white, fontSize: 25),
@@ -119,8 +115,7 @@ class _LoginState extends State<Login> {
               //Text('New User? Create Account')
               TextButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => Registration()));
+                  Navigator.pushNamed(context, '/registration');
                 },
                 child: Text(
                   'New User? Create Account',

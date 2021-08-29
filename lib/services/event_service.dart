@@ -5,6 +5,7 @@ import 'package:michango/models/event.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EventService {
+  final String baseUrl='http://172.20.10.2:3000/api/v1';
   final Uri apiUrl = Uri.parse('http://172.20.10.2:3000/api/v1/events');
   //final Uri apiUrl = Uri.parse('http://192.168.1.174:3000/api/v1/events');
 
