@@ -28,14 +28,17 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
   //Future <List<Event>> _events;
   String dropdownValue;
   Future<List<Event>> _events;
+  String _currentEvent = '';
+  String _selected = '';
 
   @override
   void initState() {
     super.initState();
     _events = EventService().getEvents();
+    _getCurrentEvent();
   }
 
-  @override
+/*   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: _events,
@@ -66,10 +69,11 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
                       color: Colors.white,
                     ), */
                   onChanged: (String newValue) {
-                    setState(() {
+                    showModal(context);
+                    /*  setState(() {
                       dropdownValue = newValue;
                       _setCurrentEvent(newValue);
-                    });
+                    }); */
                   },
                   items: snapshot.data
                       .map<DropdownMenuItem<String>>((Event event) {
@@ -85,11 +89,85 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
             return SizedBox(child: new CircularProgressIndicator());
           }
         });
+  } */
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          ElevatedButton(
+            child: Text('Selected item: $_selected'),
+            onPressed: () => showModal(context),
+          ),
+          /*  Text('Selected item: $_selected') */
+        ],
+      ),
+    );
   }
 
-  void _setCurrentEvent(eventId) async {
-    print(eventId);
+  void _setCurrentEvent(id, name) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('currentEventId', eventId);
+
+    setState(() {
+      _selected = _currentEvent;
+    });
+
+    prefs.setString('currentEventId', id);
+    prefs.setString('currentEventName', name);
+  }
+
+  void _getCurrentEvent() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _currentEvent = prefs.getString('currentEventName');
+
+    setState(() {
+      _selected = _currentEvent;
+    });
+    
+    print(_currentEvent);
+  }
+
+  void showModal(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return FutureBuilder(
+              future: _events,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  _currentEvent = snapshot.data.length > 0
+                      ? snapshot.data[0].name
+                      : 'No Event';
+                  _setCurrentEvent(snapshot.data[0].id, snapshot.data[0].name);
+
+                  return Container(
+                    padding: EdgeInsets.all(8),
+                    height: 200,
+                    alignment: Alignment.center,
+                    child: ListView.separated(
+                        itemCount: snapshot.data.length,
+                        separatorBuilder: (context, int) {
+                          return Divider();
+                        },
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                              child: Text(snapshot.data[index].name),
+                              onTap: () {
+                                setState(() {
+                                  _currentEvent = snapshot.data[index].name;
+                                });
+                                _setCurrentEvent(snapshot.data[index].id,
+                                    snapshot.data[index].name);
+                                Navigator.of(context).pop();
+                              });
+                        }),
+                  );
+                } else {
+                  return SizedBox(child: new CircularProgressIndicator());
+                }
+              });
+        });
   }
 }
