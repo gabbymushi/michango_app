@@ -29,13 +29,14 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
   String dropdownValue;
   Future<List<Event>> _events;
   String _currentEvent = '';
-  String _selected = '';
+  String _selected = 'Loading...';
 
   @override
   void initState() {
     super.initState();
     _events = EventService().getEvents();
-    _getCurrentEvent();
+    print(_events);
+    _getCurrentEvent(_events);
   }
 
 /*   @override
@@ -97,11 +98,23 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          ElevatedButton(
-            child: Text('Selected item: $_selected'),
+          TextButton(
+            child: Row(
+              children: <Widget>[
+                Text(
+                  _selected,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Encode Sans',
+                    fontWeight: FontWeight.w200,
+                    fontSize: 19,
+                  ),
+                ),
+                Icon(Icons.arrow_drop_down, color: Colors.white)
+              ],
+            ),
             onPressed: () => showModal(context),
           ),
-          /*  Text('Selected item: $_selected') */
         ],
       ),
     );
@@ -118,15 +131,21 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
     prefs.setString('currentEventName', name);
   }
 
-  void _getCurrentEvent() async {
+  void _getCurrentEvent(_events) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _currentEvent = prefs.getString('currentEventName');
+    var _current = await _events;
+
+    if (_currentEvent == null && _current.length > 0) {
+      _currentEvent = _current[0].name;
+      _setCurrentEvent(_current[0].id, _current[0].name);
+    }
+
+    print(_currentEvent);
 
     setState(() {
-      _selected = _currentEvent;
+      _selected = _currentEvent ?? 'Select Event';
     });
-    
-    print(_currentEvent);
   }
 
   void showModal(context) {
@@ -137,12 +156,17 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
               future: _events,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  _currentEvent = snapshot.data.length > 0
+                  /*  _currentEvent = snapshot.data.length > 0
                       ? snapshot.data[0].name
-                      : 'No Event';
-                  _setCurrentEvent(snapshot.data[0].id, snapshot.data[0].name);
+                      : 'No Event'; */
+                  //_setCurrentEvent(snapshot.data[0].id, snapshot.data[0].name);
 
                   return Container(
+                    decoration: new BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.only(
+                            topLeft: const Radius.circular(10.0),
+                            topRight: const Radius.circular(10.0))),
                     padding: EdgeInsets.all(8),
                     height: 200,
                     alignment: Alignment.center,
@@ -165,6 +189,7 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
                         }),
                   );
                 } else {
+                  //_setCurrentEvent(null, 'No event');
                   return SizedBox(child: new CircularProgressIndicator());
                 }
               });

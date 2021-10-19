@@ -140,18 +140,18 @@ class _RegistrationState extends State<Registration> {
                   ],
                 ),
               ),
-              ElevatedButton(
-                onPressed: _submitForm,
-                child: Text(
-                  'Tengeneza akaunti',
-                  style: TextStyle(color: Colors.white),
+              Container(
+                height: 50,
+                width: 250,
+                margin: const EdgeInsets.only(top: 0.0),
+                decoration: BoxDecoration(
+                    color: Colors.cyan,
+                    borderRadius: BorderRadius.circular(20)),
+                child: TextButton(
+                  onPressed: _submitForm,
+                  child: Text('Tengeneza akaunti',
+                      style: TextStyle(color: Colors.white, fontSize: 20)),
                 ),
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.cyan,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                    textStyle: TextStyle(
-                      fontSize: 15,
-                    )),
               ),
             ],
           ),
