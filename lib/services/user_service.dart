@@ -35,7 +35,7 @@ class UserService {
 
       return User.fromJson(body);
     } else {
-      throw Exception('Failed to regiser user');
+      throw Exception('Failed to fetch users');
     }
   }
 
@@ -62,10 +62,9 @@ class UserService {
         prefs.setString('token', token);
 
         status = true;
-      } else {
-        throw Exception('Failed to regiser user');
       }
     } catch (e) {
+      status = false;
       print(e);
     }
 
