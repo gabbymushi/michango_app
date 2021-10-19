@@ -199,14 +199,26 @@ class _RegistrationState extends State<Registration> {
 
       Map eventUser = {'event': event, 'user': user};
 
-      EventService eventService = new EventService();
+      try {
+        EventService eventService = new EventService();
 
-      eventService.createInitialEvent(eventUser);
-      clearInputFields();
-      //RegistrationUser();
-      print("Successful");
-    } else {
-      print("Unsuccessfull");
+       await eventService.createInitialEvent(eventUser);
+        clearInputFields();
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: const Text("Account created successfully."),
+              duration: const Duration(seconds: 3),
+              backgroundColor: Colors.green),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(e.toString()),
+              duration: const Duration(seconds: 5),
+              backgroundColor: Colors.red),
+        );
+      }
     }
   }
 
