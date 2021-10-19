@@ -18,11 +18,13 @@ class EventService {
         },
         body: jsonEncode(body));
 
-    if (response.statusCode == 200) {
-      return Event.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to regiser event');
+    var event = json.decode(response.body);
+
+    if (response.statusCode != 200) {
+      throw Exception(event['userMessage']);
     }
+
+    return Event.fromJson(json.decode(response.body));
   }
 
   Future<Event> createEvent(Event event) async {
