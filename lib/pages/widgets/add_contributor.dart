@@ -21,7 +21,7 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
       appBar: AppBar(
         title: Text('Ongeza Mchangiaji'),
         actions: [
-         /*  TextButton(
+          /*  TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text("Cancel"),
           ), */
@@ -118,14 +118,27 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
         'event': eventId
       };
 
-      ContributorService contributorService = new ContributorService();
+      try {
+        ContributorService contributorService = new ContributorService();
 
-      contributorService.createContributor(contributor);
+        await contributorService.createContributor(contributor);
 
-      clearInputFields();
-      print("Successful");
-    } else {
-      print("Unsuccessfull");
+        clearInputFields();
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: const Text("Contributor added successfully."),
+              duration: const Duration(seconds: 3),
+              backgroundColor: Colors.green),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(e.toString()),
+              duration: const Duration(seconds: 3),
+              backgroundColor: Colors.red),
+        );
+      }
     }
   }
 
