@@ -124,7 +124,7 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     setState(() {
-      _selected = _currentEvent;
+      _selected = _currentEvent.toUpperCase();
     });
 
     prefs.setString('currentEventId', id);
@@ -144,30 +144,28 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
     print(_currentEvent);
 
     setState(() {
-      _selected = _currentEvent ?? 'Select Event';
+      _selected = _currentEvent.toUpperCase() ?? 'Select Event';
     });
   }
 
   void showModal(context) {
     showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25.0),
+        ),
         context: context,
         builder: (context) {
           return FutureBuilder(
               future: _events,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  /*  _currentEvent = snapshot.data.length > 0
-                      ? snapshot.data[0].name
-                      : 'No Event'; */
-                  //_setCurrentEvent(snapshot.data[0].id, snapshot.data[0].name);
-
                   return Container(
                     decoration: new BoxDecoration(
                         color: Colors.white,
                         borderRadius: new BorderRadius.only(
                             topLeft: const Radius.circular(10.0),
                             topRight: const Radius.circular(10.0))),
-                    padding: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(17),
                     height: 200,
                     alignment: Alignment.center,
                     child: ListView.separated(
@@ -177,13 +175,22 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
                         },
                         itemBuilder: (context, index) {
                           return GestureDetector(
-                              child: Text(snapshot.data[index].name),
+                              child: Text(
+                                snapshot.data[index].name.toUpperCase(),
+                                style: TextStyle(
+                                  //color: Colors.white,
+                                  fontFamily: 'Encode Sans',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                ),
+                              ),
                               onTap: () {
                                 setState(() {
-                                  _currentEvent = snapshot.data[index].name;
+                                  _currentEvent =
+                                      snapshot.data[index].name.toUpperCase();
                                 });
                                 _setCurrentEvent(snapshot.data[index].id,
-                                    snapshot.data[index].name);
+                                    snapshot.data[index].name.toUpperCase());
                                 Navigator.of(context).pop();
                               });
                         }),
