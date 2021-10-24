@@ -5,7 +5,7 @@ import 'package:michango/pages/widgets/shared/bottom_nav_bar.dart';
 import 'package:michango/pages/widgets/shared/michango_app_bar.dart';
 import 'package:michango/pages/widgets/widget_home_category.dart';
 import 'package:michango/services/contributor_service.dart';
-import 'package:michango/utils/format_money.dart';
+import 'package:michango/utils/utils.dart';
 
 class Michango extends StatelessWidget {
   void _openAddEntryDialog(BuildContext context) {
@@ -99,7 +99,7 @@ Widget makeTable(_contributorModel) {
                         direction: Axis.vertical,
                         children: <Widget>[
                           Text(
-                            'PLEDGE: ${contributorSnap.data[index].pledgedAmount}',
+                            'PLEDGE: ${Utils.formatMoney(contributorSnap.data[index].pledgedAmount)}',
                             style: TextStyle(
                               fontFamily: 'Encode Sans',
                               fontWeight: FontWeight.w600,
@@ -107,7 +107,7 @@ Widget makeTable(_contributorModel) {
                             ),
                           ),
                           Text(
-                            'PAID: ${FormatMoney.formatMoney(contributorSnap.data[index].paidAmount)}',
+                            'PAID: ${Utils.formatMoney(contributorSnap.data[index].paidAmount)}',
                             style: TextStyle(
                               fontFamily: 'Encode Sans',
                               fontWeight: FontWeight.w600,
@@ -115,7 +115,7 @@ Widget makeTable(_contributorModel) {
                             ),
                           ),
                           Text(
-                            'BALANCE: ${contributorSnap.data[index].paidAmount}',
+                            'BALANCE: ${Utils.formatMoney(contributorSnap.data[index].paidAmount)}',
                             style: TextStyle(
                               fontFamily: 'Encode Sans',
                               fontWeight: FontWeight.w600,
@@ -125,7 +125,8 @@ Widget makeTable(_contributorModel) {
                         ],
                       ),
                       leading: CircleAvatar(
-                          child: Text(contributorSnap.data[index].fullName[0].toUpperCase())),
+                          child: Text(contributorSnap.data[index].fullName[0]
+                              .toUpperCase())),
                       trailing: Icon(Icons.add)));
             });
       });
