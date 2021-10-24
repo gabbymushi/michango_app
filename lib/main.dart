@@ -17,19 +17,12 @@ void main() {
         primarySwatch: Colors.cyan,
         brightness: Brightness.light,
       ),
-      /*      theme: ThemeData(
-        brightness: Brightness.light,=
-        primaryColor: Colors.blue,
-        //primarySwatch: Colors.purple[200],
-        accentColor: Colors.redAccent,
-      ), */
       routes: {
         '/first': (context) => MichangoApp(),
         '/second': (context) => SecondScreen(),
         '/michango': (context) => Michango(),
         '/registration': (context) => Registration(),
       },
-      //home: Login(),
       home: Login(),
     ),
   );
