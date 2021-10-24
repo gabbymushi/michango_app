@@ -20,7 +20,7 @@ _buildListCategory(BuildContext context) {
   MediaQueryData mediaQueryData = MediaQuery.of(context);
 
   return Container(
-    height: 150,
+    height: 100,
     child: GridView.count(
       crossAxisCount: 3,
       children: [
