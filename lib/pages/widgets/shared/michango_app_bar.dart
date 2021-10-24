@@ -141,8 +141,6 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
       _setCurrentEvent(_current[0].id, _current[0].name);
     }
 
-    print(_currentEvent);
-
     setState(() {
       _selected = _currentEvent.toUpperCase() ?? 'Select Event';
     });
