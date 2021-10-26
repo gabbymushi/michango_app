@@ -86,48 +86,54 @@ Widget makeTable(_contributorModel) {
             itemBuilder: (context, index) {
               //padding: const EdgeInsets.all(8),
               return Card(
-                  child: ListTile(
-                      title: Text(
-                        contributorSnap.data[index].fullName.toUpperCase(),
+                child: ListTile(
+                  title: Text(
+                    contributorSnap.data[index].fullName.toUpperCase(),
+                    style: TextStyle(
+                      fontFamily: 'Encode Sans',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                    ),
+                  ),
+                  subtitle: Wrap(
+                    direction: Axis.vertical,
+                    children: <Widget>[
+                      Text(
+                        'PLEDGE: ${Utils.formatMoney(contributorSnap.data[index].pledgedAmount)}',
                         style: TextStyle(
                           fontFamily: 'Encode Sans',
                           fontWeight: FontWeight.w600,
                           fontSize: 14,
                         ),
                       ),
-                      subtitle: Wrap(
-                        direction: Axis.vertical,
-                        children: <Widget>[
-                          Text(
-                            'PLEDGE: ${Utils.formatMoney(contributorSnap.data[index].pledgedAmount)}',
-                            style: TextStyle(
-                              fontFamily: 'Encode Sans',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
-                          ),
-                          Text(
-                            'PAID: ${Utils.formatMoney(contributorSnap.data[index].paidAmount)}',
-                            style: TextStyle(
-                              fontFamily: 'Encode Sans',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
-                          ),
-                          Text(
-                            'BALANCE: ${Utils.formatMoney(contributorSnap.data[index].paidAmount)}',
-                            style: TextStyle(
-                              fontFamily: 'Encode Sans',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        'PAID: ${Utils.formatMoney(contributorSnap.data[index].paidAmount)}',
+                        style: TextStyle(
+                          fontFamily: 'Encode Sans',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
                       ),
-                      leading: CircleAvatar(
-                          child: Text(contributorSnap.data[index].fullName[0]
-                              .toUpperCase())),
-                      trailing: Icon(Icons.add)));
+                      Text(
+                        'BALANCE: ${Utils.formatMoney(contributorSnap.data[index].paidAmount)}',
+                        style: TextStyle(
+                          fontFamily: 'Encode Sans',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                  leading: CircleAvatar(
+                      child: Text(contributorSnap.data[index].fullName[0]
+                          .toUpperCase())),
+                  trailing: IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {
+                        showDialogWithFields(context);
+                      }),
+                ),
+              );
             });
       });
 }
@@ -184,5 +190,46 @@ Widget _uisetup() {
         ))
       ],
     ),
+  );
+}
+
+void showDialogWithFields(context) {
+  showDialog(
+    context: context,
+    builder: (_) {
+      var emailController = TextEditingController();
+      var messageController = TextEditingController();
+      return AlertDialog(
+        title: Text('Add contribution'),
+        content: ListView(
+          shrinkWrap: true,
+          children: [
+            TextFormField(
+              controller: emailController,
+              decoration: InputDecoration(hintText: 'Amount'),
+            ),
+           /*  TextFormField(
+              controller: messageController,
+              decoration: InputDecoration(hintText: 'Message'),
+            ), */
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              // Send them to your email maybe?
+              var email = emailController.text;
+              var message = messageController.text;
+              Navigator.pop(context);
+            },
+            child: Text('Send'),
+          ),
+        ],
+      );
+    },
   );
 }
