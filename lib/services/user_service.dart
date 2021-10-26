@@ -3,11 +3,14 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:michango/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:michango/constants.dart' as Constants;
 
 class UserService {
-  final Uri apiUrl = Uri.parse('http://172.20.10.2:3000/api/v1/users');
+  String baseUrl = Constants.BASE_URL;
 
   Future<User> createUser(User user) async {
+    final Uri apiUrl = Uri.parse('$baseUrl/users');
+
     Map data = {
       'fullName': user.fullName,
       'phoneNumber': user.phoneNumber,
@@ -28,6 +31,8 @@ class UserService {
   }
 
   Future<User> getUsers() async {
+    final Uri apiUrl = Uri.parse('$baseUrl/users');
+
     final Response response = await get(apiUrl);
 
     if (response.statusCode == 200) {
@@ -40,7 +45,7 @@ class UserService {
   }
 
   Future<dynamic> login(loginInfo) async {
-    final Uri apiUrl = Uri.parse('http://172.20.10.2:3000/api/v1/auth/login');
+    final Uri apiUrl = Uri.parse('$baseUrl/auth/login');
     var status = false;
 
     try {
