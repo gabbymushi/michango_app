@@ -27,7 +27,7 @@ class ContributorService {
 
   Future<List<Contributor>> getContributors() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    
+
     final Uri apiUrl = Uri.parse(
         '$baseUrl/events/${prefs.getString('currentEventId')}/contributors');
 
@@ -42,6 +42,23 @@ class ContributorService {
           .toList();
     } else {
       throw Exception('Failed to get contributors');
+    }
+  }
+
+  Future<Contributor> recordContribution(contribution, contributorId) async {
+    final Uri apiUrl =
+        Uri.parse('$baseUrl/contributors/$contributorId/contribute');
+
+    Response response = await patch(apiUrl,
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(contribution));
+
+    if (response.statusCode == 200) {
+      return Contributor.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to add contribution');
     }
   }
 }

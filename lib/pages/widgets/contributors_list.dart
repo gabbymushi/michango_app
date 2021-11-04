@@ -52,21 +52,7 @@ class _ContributorsList extends State<ContributorsList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      child: makeTable(_contributorModel),
-      /*     child: FittedBox(
-        child: FutureBuilder(
-          future: _contributorModel,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return makeTable(snapshot.data);
-            } else {
-              return CircularProgressIndicator();
-            }
-          },
-        ),
-      ), */
-    );
+        width: double.infinity, child: makeTable(_contributorModel));
   }
 }
 
@@ -75,7 +61,7 @@ Widget makeTable(_contributorModel) {
       future: _contributorModel,
       builder: (context, contributorSnap) {
         if (!contributorSnap.hasData) {
-          //print('project snapshot data is: ${projectSnap.data}');
+          ;
           return Center(child: CircularProgressIndicator());
         }
 
@@ -115,7 +101,7 @@ Widget makeTable(_contributorModel) {
                         ),
                       ),
                       Text(
-                        'BALANCE: ${Utils.formatMoney(contributorSnap.data[index].paidAmount)}',
+                        'BALANCE: ${Utils.formatMoney(contributorSnap.data[index].pledgedAmount - contributorSnap.data[index].paidAmount)}',
                         style: TextStyle(
                           fontFamily: 'Encode Sans',
                           fontWeight: FontWeight.w600,
@@ -134,7 +120,8 @@ Widget makeTable(_contributorModel) {
                             context,
                             contributorSnap.data[index].fullName.toUpperCase(),
                             contributorSnap.data[index].pledgedAmount,
-                            contributorSnap.data[index].paidAmount);
+                            contributorSnap.data[index].paidAmount,
+                            contributorSnap.data[index].id);
                       }),
                 ),
               );
@@ -157,17 +144,9 @@ Widget _uisetup() {
             //controller: _password,
             decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                //border: UnderlineInputBorder(),
-                //suffixIcon: Icon(Icons.search),
                 prefixIcon: Icon(Icons.search),
                 labelText: 'Search',
                 hintText: 'Search by name or phone no'),
-            /*  validator: (String value) {
-                    if (value.isEmpty) {
-                      return "Please enter password";
-                    }
-                    return null;
-                  }, */
           ),
         ),
         Expanded(
@@ -175,35 +154,20 @@ Widget _uisetup() {
           // padding: EdgeInsets.all(0),
           height: 200,
           child: ContributorsList(),
-          /*  child: Column(
-            children: [
-              //DashboardItems(),
-              ContributorsList()
-              //Text('Widget 2'),
-            ],
-          ), */
-          /*     child: ListView(
-            shrinkWrap: true,
-            physics: BouncingScrollPhysics(),
-            children: [
-              DashboardItems(),
-              ContributorsList()
-              //Text('Widget 2'),
-            ],
-          ), */
         ))
       ],
     ),
   );
 }
 
-void showDialogWithFields(context, name, pledge, paidAmount) {
+void showDialogWithFields(context, name, pledge, paidAmount, contributorId) {
   num balance = pledge - paidAmount;
+
   showDialog(
     context: context,
     builder: (_) {
-      var emailController = TextEditingController();
-      var messageController = TextEditingController();
+      TextEditingController _amount = TextEditingController();
+
       return AlertDialog(
         title: Text(
           'ADD CONTRIBUTION',
@@ -247,8 +211,7 @@ void showDialogWithFields(context, name, pledge, paidAmount) {
                         fontFamily: 'Encode Sans',
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
-                        color: Colors.grey[600]
-                        ),
+                        color: Colors.grey[600]),
                   ),
                   Text(
                     Utils.formatMoney(pledge),
@@ -272,8 +235,7 @@ void showDialogWithFields(context, name, pledge, paidAmount) {
                         fontFamily: 'Encode Sans',
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
-                        color: Colors.grey[600]
-                        ),
+                        color: Colors.grey[600]),
                   ),
                   Text(
                     Utils.formatMoney(paidAmount),
@@ -302,18 +264,17 @@ void showDialogWithFields(context, name, pledge, paidAmount) {
                   Text(
                     Utils.formatMoney(balance),
                     style: TextStyle(
-                      fontFamily: 'Encode Sans',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      color: Colors.red
-                    ),
+                        fontFamily: 'Encode Sans',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: Colors.red),
                   )
                 ],
               ),
             ),
             TextFormField(
               keyboardType: TextInputType.number,
-              controller: emailController,
+              controller: _amount,
               decoration: InputDecoration(
                 hintText: 'Amount',
                 border: OutlineInputBorder(),
@@ -329,9 +290,12 @@ void showDialogWithFields(context, name, pledge, paidAmount) {
           ),
           TextButton(
             onPressed: () {
-              // Send them to your email maybe?
-              var email = emailController.text;
-              var message = messageController.text;
+              Map contribution = {
+                'amount': _amount.text == '' ? 0 : _amount.text
+              };
+
+              _submitForm(context, contribution, contributorId);
+
               Navigator.pop(context);
             },
             child: Text('Save'),
@@ -340,4 +304,26 @@ void showDialogWithFields(context, name, pledge, paidAmount) {
       );
     },
   );
+}
+
+Future _submitForm(context, contribution, contributorId) async {
+  try {
+    ContributorService contributorService = new ContributorService();
+
+    await contributorService.recordContribution(contribution, contributorId);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+          content: const Text("Contribution added successfully."),
+          duration: const Duration(seconds: 3),
+          backgroundColor: Colors.green),
+    );
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+          content: Text(e.toString()),
+          duration: const Duration(seconds: 3),
+          backgroundColor: Colors.red),
+    );
+  }
 }
