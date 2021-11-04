@@ -130,7 +130,11 @@ Widget makeTable(_contributorModel) {
                   trailing: IconButton(
                       icon: Icon(Icons.add),
                       onPressed: () {
-                        showDialogWithFields(context);
+                        showDialogWithFields(
+                            context,
+                            contributorSnap.data[index].fullName.toUpperCase(),
+                            contributorSnap.data[index].pledgedAmount,
+                            contributorSnap.data[index].paidAmount);
                       }),
                 ),
               );
@@ -193,25 +197,129 @@ Widget _uisetup() {
   );
 }
 
-void showDialogWithFields(context) {
+void showDialogWithFields(context, name, pledge, paidAmount) {
+  num balance = pledge - paidAmount;
   showDialog(
     context: context,
     builder: (_) {
       var emailController = TextEditingController();
       var messageController = TextEditingController();
       return AlertDialog(
-        title: Text('Add contribution'),
+        title: Text(
+          'ADD CONTRIBUTION',
+          style: TextStyle(
+            fontFamily: 'Encode Sans',
+            fontWeight: FontWeight.w600,
+            fontSize: 18,
+          ),
+        ),
         content: ListView(
           shrinkWrap: true,
           children: [
-            TextFormField(
-              controller: emailController,
-              decoration: InputDecoration(hintText: 'Amount'),
+            Padding(
+              padding: EdgeInsets.only(bottom: 7),
+              child: Row(
+                children: [
+                  Text('Contributor: ',
+                      style: TextStyle(
+                          fontFamily: 'Encode Sans',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 16,
+                          color: Colors.grey[600])),
+                  Text(
+                    name,
+                    style: TextStyle(
+                      fontFamily: 'Encode Sans',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                    ),
+                  )
+                ],
+              ),
             ),
-           /*  TextFormField(
-              controller: messageController,
-              decoration: InputDecoration(hintText: 'Message'),
-            ), */
+            Padding(
+              padding: EdgeInsets.only(bottom: 7),
+              child: Row(
+                children: [
+                  Text(
+                    'Pledge: ',
+                    style: TextStyle(
+                        fontFamily: 'Encode Sans',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: Colors.grey[600]
+                        ),
+                  ),
+                  Text(
+                    Utils.formatMoney(pledge),
+                    style: TextStyle(
+                      fontFamily: 'Encode Sans',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      //color: Colors.yellow[600]
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 7),
+              child: Row(
+                children: [
+                  Text(
+                    'Paid Amount: ',
+                    style: TextStyle(
+                        fontFamily: 'Encode Sans',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: Colors.grey[600]
+                        ),
+                  ),
+                  Text(
+                    Utils.formatMoney(paidAmount),
+                    style: TextStyle(
+                      fontFamily: 'Encode Sans',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      //color: Colors.green
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 7),
+              child: Row(
+                children: [
+                  Text(
+                    'Balance: ',
+                    style: TextStyle(
+                        fontFamily: 'Encode Sans',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: Colors.grey[600]),
+                  ),
+                  Text(
+                    Utils.formatMoney(balance),
+                    style: TextStyle(
+                      fontFamily: 'Encode Sans',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      color: Colors.red
+                    ),
+                  )
+                ],
+              ),
+            ),
+            TextFormField(
+              keyboardType: TextInputType.number,
+              controller: emailController,
+              decoration: InputDecoration(
+                hintText: 'Amount',
+                border: OutlineInputBorder(),
+              ),
+              maxLines: 1,
+            ),
           ],
         ),
         actions: [
@@ -226,7 +334,7 @@ void showDialogWithFields(context) {
               var message = messageController.text;
               Navigator.pop(context);
             },
-            child: Text('Send'),
+            child: Text('Save'),
           ),
         ],
       );
