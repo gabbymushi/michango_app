@@ -61,7 +61,6 @@ Widget makeTable(_contributorModel) {
       future: _contributorModel,
       builder: (context, contributorSnap) {
         if (!contributorSnap.hasData) {
-          ;
           return Center(child: CircularProgressIndicator());
         }
 
