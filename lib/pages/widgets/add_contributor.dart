@@ -113,8 +113,8 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
       Map contributor = {
         'fullName': _fullName.text,
         'phoneNumber': _phoneNumber.text,
-        'pledgedAmount': _pledge.text,
-        'paidAmount': _paidAmount.text,
+        'pledgedAmount': _pledge.text == '' ? 0 : _pledge.text,
+        'paidAmount': _paidAmount.text == '' ? 0 : _paidAmount.text,
         'event': eventId
       };
 
