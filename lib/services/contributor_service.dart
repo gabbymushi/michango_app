@@ -27,6 +27,7 @@ class ContributorService {
 
   Future<List<Contributor>> getContributors() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    
     final Uri apiUrl = Uri.parse(
         '$baseUrl/events/${prefs.getString('currentEventId')}/contributors');
 

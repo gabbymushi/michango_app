@@ -70,7 +70,6 @@ class UserService {
       }
     } catch (e) {
       status = false;
-      print(e);
     }
 
     return status;
