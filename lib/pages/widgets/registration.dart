@@ -142,15 +142,27 @@ class _RegistrationState extends State<Registration> {
               ),
               Container(
                 height: 50,
-                width: 250,
-                margin: const EdgeInsets.only(top: 0.0),
+                width: double.infinity,
+                margin: const EdgeInsets.only(
+                  top: 0.0,
+                  bottom: 12,
+                  left: 12,
+                  right: 12,
+                ),
                 decoration: BoxDecoration(
-                    color: Colors.cyan,
-                    borderRadius: BorderRadius.circular(20)),
+                  color: Colors.cyan,
+                  borderRadius: BorderRadius.circular(100),
+                ),
                 child: TextButton(
                   onPressed: _submitForm,
-                  child: Text('Tengeneza akaunti',
-                      style: TextStyle(color: Colors.white, fontSize: 20)),
+                  child: Text(
+                    'Tengeneza akaunti',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -202,7 +214,7 @@ class _RegistrationState extends State<Registration> {
       try {
         EventService eventService = new EventService();
 
-       await eventService.createInitialEvent(eventUser);
+        await eventService.createInitialEvent(eventUser);
         clearInputFields();
 
         ScaffoldMessenger.of(context).showSnackBar(
