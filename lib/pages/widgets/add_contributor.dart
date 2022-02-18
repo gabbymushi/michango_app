@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:michango/ThousandNumberFormatter.dart';
 import 'package:michango/services/contributor_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -90,6 +91,7 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
                       border: OutlineInputBorder(),
                       labelText: 'Kiasi cha ahadi',
                     ),
+                    inputFormatters: [ThousandsSeparatorInputFormatter()],
                   ),
                 ),
               ),
