@@ -43,58 +43,66 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: TextFormField(
-                  controller: _fullName,
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return "Please enter Fullname";
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Jina kamili',
-                    hintText: 'Jina kamili',
+              Flexible(
+                child: Padding(
+                  padding: EdgeInsets.all(7),
+                  child: TextFormField(
+                    controller: _fullName,
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return "Please enter Fullname";
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Jina kamili',
+                      hintText: 'Jina kamili',
+                    ),
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: TextFormField(
-                  controller: _phoneNumber,
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return "Please enter phone number";
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Namba ya simu',
+              Flexible(
+                child: Padding(
+                  padding: EdgeInsets.all(7),
+                  child: TextFormField(
+                    controller: _phoneNumber,
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return "Tafadhali ingiza namba ya simu.";
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Namba ya simu',
+                    ),
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: TextFormField(
-                  controller: _pledge,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Kiasi cha ahadi',
+              Flexible(
+                child: Padding(
+                  padding: EdgeInsets.all(7),
+                  child: TextFormField(
+                    controller: _pledge,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Kiasi cha ahadi',
+                    ),
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: TextFormField(
-                  controller: _paidAmount,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Kiasi anachopunguza',
+              Flexible(
+                child: Padding(
+                  padding: EdgeInsets.all(7),
+                  child: TextFormField(
+                    controller: _paidAmount,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Kiasi anachopunguza',
+                    ),
                   ),
                 ),
               ),

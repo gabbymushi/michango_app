@@ -187,14 +187,16 @@ void showDialogWithFields(context, name, pledge, paidAmount, contributorId) {
                       style: TextStyle(
                           fontFamily: 'Encode Sans',
                           fontWeight: FontWeight.w600,
-                          fontSize: 16,
+                          fontSize: 15,
                           color: Colors.grey[600])),
-                  Text(
-                    name,
-                    style: TextStyle(
-                      fontFamily: 'Encode Sans',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
+                  Flexible(
+                    child: Text(
+                      name,
+                      style: TextStyle(
+                        fontFamily: 'Encode Sans',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                      ),
                     ),
                   )
                 ],
@@ -209,7 +211,7 @@ void showDialogWithFields(context, name, pledge, paidAmount, contributorId) {
                     style: TextStyle(
                         fontFamily: 'Encode Sans',
                         fontWeight: FontWeight.w600,
-                        fontSize: 16,
+                        fontSize: 15,
                         color: Colors.grey[600]),
                   ),
                   Text(
@@ -217,7 +219,7 @@ void showDialogWithFields(context, name, pledge, paidAmount, contributorId) {
                     style: TextStyle(
                       fontFamily: 'Encode Sans',
                       fontWeight: FontWeight.w600,
-                      fontSize: 16,
+                      fontSize: 15,
                       //color: Colors.yellow[600]
                     ),
                   )
@@ -233,7 +235,7 @@ void showDialogWithFields(context, name, pledge, paidAmount, contributorId) {
                     style: TextStyle(
                         fontFamily: 'Encode Sans',
                         fontWeight: FontWeight.w600,
-                        fontSize: 16,
+                        fontSize: 15,
                         color: Colors.grey[600]),
                   ),
                   Text(
@@ -241,7 +243,7 @@ void showDialogWithFields(context, name, pledge, paidAmount, contributorId) {
                     style: TextStyle(
                       fontFamily: 'Encode Sans',
                       fontWeight: FontWeight.w600,
-                      fontSize: 16,
+                      fontSize: 15,
                       //color: Colors.green
                     ),
                   )
@@ -257,7 +259,7 @@ void showDialogWithFields(context, name, pledge, paidAmount, contributorId) {
                     style: TextStyle(
                         fontFamily: 'Encode Sans',
                         fontWeight: FontWeight.w600,
-                        fontSize: 16,
+                        fontSize: 15,
                         color: Colors.grey[600]),
                   ),
                   Text(
@@ -265,7 +267,7 @@ void showDialogWithFields(context, name, pledge, paidAmount, contributorId) {
                     style: TextStyle(
                         fontFamily: 'Encode Sans',
                         fontWeight: FontWeight.w600,
-                        fontSize: 16,
+                        fontSize: 15,
                         color: Colors.red),
                   )
                 ],
@@ -288,12 +290,12 @@ void showDialogWithFields(context, name, pledge, paidAmount, contributorId) {
             child: Text('Cancel'),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               Map contribution = {
                 'amount': _amount.text == '' ? 0 : _amount.text
               };
 
-              _submitForm(context, contribution, contributorId);
+              await _submitForm(context, contribution, contributorId);
 
               Navigator.pop(context);
             },
@@ -302,7 +304,7 @@ void showDialogWithFields(context, name, pledge, paidAmount, contributorId) {
         ],
       );
     },
-  );
+  ).then((_) => Navigator.pushNamed(context, "/michango"));
 }
 
 Future _submitForm(context, contribution, contributorId) async {
