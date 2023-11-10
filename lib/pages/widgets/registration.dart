@@ -140,18 +140,30 @@ class _RegistrationState extends State<Registration> {
                   ],
                 ),
               ),
-              ElevatedButton(
-                onPressed: _submitForm,
-                child: Text(
-                  'Tengeneza akaunti',
-                  style: TextStyle(color: Colors.white),
+              Container(
+                height: 50,
+                width: double.infinity,
+                margin: const EdgeInsets.only(
+                  top: 0.0,
+                  bottom: 12,
+                  left: 12,
+                  right: 12,
                 ),
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.cyan,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-                    textStyle: TextStyle(
-                      fontSize: 15,
-                    )),
+                decoration: BoxDecoration(
+                  color: Colors.cyan,
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: TextButton(
+                  onPressed: _submitForm,
+                  child: Text(
+                    'Tengeneza akaunti',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),
@@ -199,14 +211,26 @@ class _RegistrationState extends State<Registration> {
 
       Map eventUser = {'event': event, 'user': user};
 
-      EventService eventService = new EventService();
+      try {
+        EventService eventService = new EventService();
 
-      eventService.createInitialEvent(eventUser);
-      clearInputFields();
-      //RegistrationUser();
-      print("Successful");
-    } else {
-      print("Unsuccessfull");
+        await eventService.createInitialEvent(eventUser);
+        clearInputFields();
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: const Text("Account created successfully."),
+              duration: const Duration(seconds: 3),
+              backgroundColor: Colors.green),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(e.toString()),
+              duration: const Duration(seconds: 5),
+              backgroundColor: Colors.red),
+        );
+      }
     }
   }
 

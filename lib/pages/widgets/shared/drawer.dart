@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:michango/pages/widgets/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -31,9 +32,10 @@ class MyDrawer extends StatelessWidget {
               'Logout',
               style: TextStyle(color: Colors.blue, fontSize: 25),
             ),
-            onTap: () {
-              /*  Navigator.push(
-                      context, MaterialPageRoute(builder: (_) => Login())); */
+            onTap: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              await prefs.clear();
+
               Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (context) => Login()));
             },

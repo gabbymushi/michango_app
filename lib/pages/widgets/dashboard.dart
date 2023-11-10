@@ -2,19 +2,10 @@ import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
   final List<Map<String, dynamic>> categories = [
-    {
-      'color': Colors.green[200],
-      'title': 'Michango',
-      'icon': Icons.monetization_on
-    },
-    {'color': Colors.pink[200], 'title': 'Wauzaji', 'icon': Icons.shop},
-     {
-      'color': Colors.purple[200],
-      'title': 'Manage events',
-      'icon': Icons.event
-    },
-    {'color': Colors.blue[200], 'title': 'Settings', 'icon': Icons.settings},
-   
+    {'color': Colors.green, 'title': 'Michango', 'icon': Icons.monetization_on},
+    {'color': Colors.pink, 'title': 'Wauzaji', 'icon': Icons.shop},
+    {'color': Colors.purple, 'title': 'Manage events', 'icon': Icons.event},
+    {'color': Colors.blue, 'title': 'Settings', 'icon': Icons.settings},
 
     /*   {'color': Colors.pink[200], 'title': 'Walk', 'icon': Icons.directions_walk},
     {'color': Colors.blue[200], 'title': 'Contact', 'icon': Icons.contact_mail},
@@ -47,17 +38,24 @@ class Dashboard extends StatelessWidget {
                       width: 200,
                       height: 400,
                       padding: const EdgeInsets.all(5),
-                      color: data['color'],
+                      color: data['color'][100],
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(
                             data['icon'],
-                            size: 40,
+                            size: 24,
+                            color: data['color'][900],
                           ),
-                          Text(data['title'],
-                              style:
-                                  TextStyle(fontSize: 22, color: Colors.white),
-                              textAlign: TextAlign.center)
+                          SizedBox(height: 8),
+                          Text(
+                            data['title'],
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: data['color'][900],
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ],
                       ),
                     )),

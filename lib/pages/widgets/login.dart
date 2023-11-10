@@ -139,12 +139,18 @@ class _LoginState extends State<Login> {
       UserService userService = new UserService();
 
       var hasLoggein = await userService.login(loginInfo);
+
       if (hasLoggein) {
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => MichangoApp()));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: const Text("Wrong username or password."),
+              duration: const Duration(seconds: 3),
+              backgroundColor: Colors.red),
+        );
       }
-    } else {
-      //AlertDialog()
-    }
+    } 
   }
 }

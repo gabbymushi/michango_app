@@ -28,14 +28,18 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
   //Future <List<Event>> _events;
   String dropdownValue;
   Future<List<Event>> _events;
+  String _currentEvent = '';
+  String _selected = 'Loading...';
 
   @override
   void initState() {
     super.initState();
     _events = EventService().getEvents();
+    print(_events);
+    _getCurrentEvent(_events);
   }
 
-  @override
+/*   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: _events,
@@ -66,10 +70,11 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
                       color: Colors.white,
                     ), */
                   onChanged: (String newValue) {
-                    setState(() {
+                    showModal(context);
+                    /*  setState(() {
                       dropdownValue = newValue;
                       _setCurrentEvent(newValue);
-                    });
+                    }); */
                   },
                   items: snapshot.data
                       .map<DropdownMenuItem<String>>((Event event) {
@@ -85,11 +90,114 @@ class _EventsDropDownButtonState extends State<EventsDropDownButton> {
             return SizedBox(child: new CircularProgressIndicator());
           }
         });
+  } */
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          TextButton(
+            child: Row(
+              children: <Widget>[
+                Text(
+                  _selected,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Encode Sans',
+                    fontWeight: FontWeight.w200,
+                    fontSize: 19,
+                  ),
+                ),
+                Icon(Icons.arrow_drop_down, color: Colors.white)
+              ],
+            ),
+            onPressed: () => showModal(context),
+          ),
+        ],
+      ),
+    );
   }
 
-  void _setCurrentEvent(eventId) async {
-    print(eventId);
+  void _setCurrentEvent(id, name) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('currentEventId', eventId);
+
+    setState(() {
+      _selected = _currentEvent.toUpperCase();
+    });
+
+    prefs.setString('currentEventId', id);
+    prefs.setString('currentEventName', name);
+  }
+
+  void _getCurrentEvent(_events) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _currentEvent = prefs.getString('currentEventName');
+    var _current = await _events;
+
+    if (_currentEvent == null && _current.length > 0) {
+      _currentEvent = _current[0].name;
+      _setCurrentEvent(_current[0].id, _current[0].name);
+    }
+
+    setState(() {
+      _selected = _currentEvent.toUpperCase() ?? 'Select Event';
+    });
+  }
+
+  void showModal(context) {
+    showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25.0),
+        ),
+        context: context,
+        builder: (context) {
+          return FutureBuilder(
+              future: _events,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Container(
+                    decoration: new BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: new BorderRadius.only(
+                            topLeft: const Radius.circular(10.0),
+                            topRight: const Radius.circular(10.0))),
+                    padding: EdgeInsets.all(17),
+                    height: 200,
+                    alignment: Alignment.center,
+                    child: ListView.separated(
+                        itemCount: snapshot.data.length,
+                        separatorBuilder: (context, int) {
+                          return Divider();
+                        },
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                              child: Text(
+                                snapshot.data[index].name.toUpperCase(),
+                                style: TextStyle(
+                                  //color: Colors.white,
+                                  fontFamily: 'Encode Sans',
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  _currentEvent =
+                                      snapshot.data[index].name.toUpperCase();
+                                });
+                                _setCurrentEvent(snapshot.data[index].id,
+                                    snapshot.data[index].name.toUpperCase());
+                                Navigator.of(context).pop();
+                              });
+                        }),
+                  );
+                } else {
+                  //_setCurrentEvent(null, 'No event');
+                  return SizedBox(child: new CircularProgressIndicator());
+                }
+              });
+        });
   }
 }

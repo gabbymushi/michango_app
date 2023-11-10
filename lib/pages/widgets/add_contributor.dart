@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:michango/ThousandNumberFormatter.dart';
 import 'package:michango/services/contributor_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -21,7 +22,7 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
       appBar: AppBar(
         title: Text('Ongeza Mchangiaji'),
         actions: [
-         /*  TextButton(
+          /*  TextButton(
             onPressed: () => Navigator.pop(context),
             child: Text("Cancel"),
           ), */
@@ -43,58 +44,67 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: TextFormField(
-                  controller: _fullName,
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return "Please enter Fullname";
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Jina kamili',
-                    hintText: 'Jina kamili',
+              Flexible(
+                child: Padding(
+                  padding: EdgeInsets.all(7),
+                  child: TextFormField(
+                    controller: _fullName,
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return "Please enter Fullname";
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Jina kamili',
+                      hintText: 'Jina kamili',
+                    ),
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: TextFormField(
-                  controller: _phoneNumber,
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return "Please enter phone number";
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Namba ya simu',
+              Flexible(
+                child: Padding(
+                  padding: EdgeInsets.all(7),
+                  child: TextFormField(
+                    controller: _phoneNumber,
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return "Tafadhali ingiza namba ya simu.";
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Namba ya simu',
+                    ),
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: TextFormField(
-                  controller: _pledge,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Kiasi cha ahadi',
+              Flexible(
+                child: Padding(
+                  padding: EdgeInsets.all(7),
+                  child: TextFormField(
+                    controller: _pledge,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Kiasi cha ahadi',
+                    ),
+                    inputFormatters: [ThousandsSeparatorInputFormatter()],
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: TextFormField(
-                  controller: _paidAmount,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Kiasi anachopunguza',
+              Flexible(
+                child: Padding(
+                  padding: EdgeInsets.all(7),
+                  child: TextFormField(
+                    controller: _paidAmount,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Kiasi anachopunguza',
+                    ),
                   ),
                 ),
               ),
@@ -113,19 +123,32 @@ class _AddEntryDialogState extends State<AddEntryDialog> {
       Map contributor = {
         'fullName': _fullName.text,
         'phoneNumber': _phoneNumber.text,
-        'pledgedAmount': _pledge.text,
-        'paidAmount': _paidAmount.text,
+        'pledgedAmount': _pledge.text == '' ? 0 : _pledge.text,
+        'paidAmount': _paidAmount.text == '' ? 0 : _paidAmount.text,
         'event': eventId
       };
 
-      ContributorService contributorService = new ContributorService();
+      try {
+        ContributorService contributorService = new ContributorService();
 
-      contributorService.createContributor(contributor);
+        await contributorService.createContributor(contributor);
 
-      clearInputFields();
-      print("Successful");
-    } else {
-      print("Unsuccessfull");
+        clearInputFields();
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: const Text("Contributor added successfully."),
+              duration: const Duration(seconds: 3),
+              backgroundColor: Colors.green),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(e.toString()),
+              duration: const Duration(seconds: 3),
+              backgroundColor: Colors.red),
+        );
+      }
     }
   }
 
